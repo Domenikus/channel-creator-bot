@@ -1,0 +1,14 @@
+/vendor
+/.idea
+/.vscode
+/.vagrant
+.phpunit.result.cache
+.env
+/database/database.sqlite
+/composer.phar
+/docker-compose.yml
+/data/
+/builds/
+/storage/logs/
+/storage/rank-icons/
+/.env.docker

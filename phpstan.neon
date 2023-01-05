@@ -1,0 +1,11 @@
+includes:
+    - ./vendor/nunomaduro/larastan/extension.neon
+parameters:
+    paths:
+        - app
+    level: max
+    parallel:
+        maximumNumberOfProcesses: 4
+    scanDirectories:
+        - vendor/planetteamspeak
+    checkMissingIterableValueType: false

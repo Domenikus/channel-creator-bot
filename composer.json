@@ -1,0 +1,75 @@
+{
+  "name": "laravel-zero/laravel-zero",
+  "description": "The Laravel Zero Framework.",
+  "keywords": [
+    "framework",
+    "laravel",
+    "laravel zero",
+    "console",
+    "cli"
+  ],
+  "homepage": "https://laravel-zero.com",
+  "type": "project",
+  "license": "MIT",
+  "support": {
+    "issues": "https://github.com/laravel-zero/laravel-zero/issues",
+    "source": "https://github.com/laravel-zero/laravel-zero"
+  },
+  "authors": [
+    {
+      "name": "Dominik Süßenbach",
+      "email": "dominik@suessenbach.com"
+    }
+  ],
+  "require": {
+    "php": "^8.1",
+    "ext-pdo": "*",
+    "ext-posix": "*",
+    "doctrine/dbal": "^3.5",
+    "illuminate/database": "^9.0",
+    "illuminate/log": "^9.0",
+    "laminas/laminas-text": "^2.9",
+    "laravel-zero/framework": "^9.0",
+    "nunomaduro/laravel-console-menu": "^3.3",
+    "planetteamspeak/ts3-php-framework": "dev-master"
+  },
+  "require-dev": {
+    "laravel/pint": "^1.2",
+    "nunomaduro/larastan": "^2.0"
+  },
+  "autoload": {
+    "psr-4": {
+      "App\\": "app/",
+      "Database\\Factories\\": "database/factories/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "Tests\\": "tests/"
+    }
+  },
+  "scripts": {
+    "analyse": [
+      "./vendor/bin/phpstan analyse --memory-limit=2G -c phpstan.neon"
+    ],
+    "sniff": [
+      "./vendor/bin/pint --test"
+    ],
+    "lint": [
+      "./vendor/bin/pint"
+    ]
+  },
+  "config": {
+    "preferred-install": "dist",
+    "sort-packages": true,
+    "optimize-autoloader": true,
+    "allow-plugins": {
+      "pestphp/pest-plugin": false
+    }
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true,
+  "bin": [
+    "channel-creator-bot"
+  ]
+}
