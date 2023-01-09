@@ -2,8 +2,9 @@
 
 namespace App\Providers;
 
+use App\Services\ClientServiceInterface;
+use App\Services\Listeners\ChannelListener;
 use App\Services\Listeners\TimeoutListener;
-use App\Services\UserServiceInterface;
 use Illuminate\Contracts\Support\DeferrableProvider;
 use Illuminate\Support\ServiceProvider;
 
@@ -11,19 +12,15 @@ class TeamspeakListenerServiceProvider extends ServiceProvider implements Deferr
 {
     const TAG_NAME = 'teamspeak-listener';
 
-    public function boot(): void
-    {
-    }
-
     public function provides(): array
     {
-        return [TimeoutListener::class];
+        return [TimeoutListener::class, ChannelListener::class];
     }
 
     public function register(): void
     {
-        $service = $this->app->make(UserServiceInterface::class);
-        if (! $service instanceof UserServiceInterface) {
+        $service = $this->app->make(ClientServiceInterface::class);
+        if (! $service instanceof ClientServiceInterface) {
             return;
         }
 
@@ -31,6 +28,10 @@ class TeamspeakListenerServiceProvider extends ServiceProvider implements Deferr
             return new TimeoutListener();
         });
 
-        $this->app->tag([TimeoutListener::class], self::TAG_NAME);
+        $this->app->bind(ChannelListener::class, function () use ($service) {
+            return new ChannelListener($service);
+        });
+
+        $this->app->tag([TimeoutListener::class, ChannelListener::class], self::TAG_NAME);
     }
 }

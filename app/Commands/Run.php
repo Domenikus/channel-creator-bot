@@ -4,6 +4,7 @@ namespace App\Commands;
 
 use App\Facades\TeamSpeak3;
 use App\Providers\TeamspeakListenerServiceProvider;
+use App\Services\Gateways\TeamspeakGateway;
 use LaravelZero\Framework\Commands\Command;
 
 class Run extends Command
@@ -32,6 +33,15 @@ class Run extends Command
             foreach ($this->app->tagged(TeamspeakListenerServiceProvider::TAG_NAME) as $listener) {
                 $listener->init();
             }
+        });
+
+        $this->task('Joining default channel', function () {
+            $this->newLine();
+            if (is_numeric(config('teamspeak.default_channel'))) {
+                return TeamspeakGateway::moveClient((int) config('teamspeak.default_channel'));
+            }
+
+            return true;
         });
 
         $this->task('Listen for events', function () {

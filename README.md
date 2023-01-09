@@ -1,1 +1,7 @@
 # channel-creator-bot
+
+b_client_ignore_antiflood
+i_client_max_channel_subscriptions -1
+b_channel_join_permanent
+i_channel_join_power
+

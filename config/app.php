@@ -55,6 +55,7 @@ return [
 
     'providers' => [
         App\Providers\AppServiceProvider::class,
+        App\Providers\ClientServiceProvider::class,
         App\Providers\TeamspeakServiceProvider::class,
         App\Providers\TeamspeakListenerServiceProvider::class,
     ],

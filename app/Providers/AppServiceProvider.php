@@ -2,17 +2,11 @@
 
 namespace App\Providers;
 
-use App\Services\UserService;
-use App\Services\UserServiceInterface;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
 {
-    public array $bindings = [
-        UserServiceInterface::class => UserService::class,
-    ];
-
     public function boot(): void
     {
         Model::preventLazyLoading(! $this->app->isProduction());
