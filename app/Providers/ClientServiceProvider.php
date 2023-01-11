@@ -33,9 +33,8 @@ class ClientServiceProvider extends ServiceProvider implements DeferrableProvide
             (! is_numeric($channelNeededSubscribePower) && ! is_null($channelNeededSubscribePower))
             )
         ) {
-            Log::error('Invalid settings');
-
-            return;
+            Log::error('Invalid environment variables');
+            exit();
         }
 
         /** @var int|null $channelClientLimit */
