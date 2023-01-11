@@ -11,7 +11,7 @@ return [
     'bot_name' => 'channel-creator-bot_'.Str::random(4),
     'default_channel' => env('TEAMSPEAK_DEFAULT_CHANNEL'),
 
-    'parent_channel' => env('TEAMSPEAK_PARENT_CHANNEL'),
+    'parent_channel' => env('TEAMSPEAK_PARENT_CHANNEL', 1),
     'channel_template' => env('TEAMSPEAK_CHANNEL_TEMPLATE', 'Team channel from:'),
     'channel_client_limit' => env('TEAMSPEAK_CHANNEL_CLIENT_LIMIT'),
     'channel_admin_group_id' => env('TEAMSPEAK_CHANNEL_ADMIN_GROUP_ID'),
