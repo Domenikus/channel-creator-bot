@@ -4,6 +4,7 @@ namespace App\Services\Listeners;
 
 use App\Facades\TeamSpeak3;
 use App\Services\ClientServiceInterface;
+use App\Services\Gateways\TeamspeakGateway;
 use TeamSpeak3_Adapter_ServerQuery_Event;
 use TeamSpeak3_Helper_Signal;
 use TeamSpeak3_Node_Host;
@@ -23,6 +24,7 @@ class ChannelListener implements TeamspeakListener
 
         TeamSpeak3_Helper_Signal::getInstance()->subscribe('notifyClientmoved',
             function (TeamSpeak3_Adapter_ServerQuery_Event $event, TeamSpeak3_Node_Host $host) {
+                TeamspeakGateway::refreshConnection();
                 $data = $event->getData();
                 $this->service->handleClientMove((int) $data['clid'], (int) $data['ctid']);
             });

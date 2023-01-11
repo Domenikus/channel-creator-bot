@@ -3,7 +3,6 @@ FROM php:8.1-cli-alpine
 ARG version
 
 RUN apk add ncurses composer
-RUN docker-php-ext-install mysqli pdo pdo_mysql posix && docker-php-ext-enable mysqli pdo pdo_mysql posix
 RUN mkdir -p /usr/src/channel-creator-bot
 
 COPY . /usr/src/channel-creator-bot/

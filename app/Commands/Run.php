@@ -38,7 +38,7 @@ class Run extends Command
         $this->task('Joining default channel', function () {
             $this->newLine();
             if (is_numeric(config('teamspeak.default_channel'))) {
-                return TeamspeakGateway::moveClient((int) config('teamspeak.default_channel'));
+                return TeamspeakGateway::moveClient(TeamspeakGateway::getOwnClientId(), (int) config('teamspeak.default_channel'));
             }
 
             return true;
