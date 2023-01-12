@@ -24,7 +24,7 @@ class ChannelListener implements TeamspeakListener
 
         TeamSpeak3_Helper_Signal::getInstance()->subscribe('notifyClientmoved',
             function (TeamSpeak3_Adapter_ServerQuery_Event $event, TeamSpeak3_Node_Host $host) {
-                TeamspeakGateway::refreshConnection();
+                TeamspeakGateway::clearClientCache();
                 $data = $event->getData();
                 $this->service->handleClientMove((int) $data['clid'], (int) $data['ctid']);
             });
