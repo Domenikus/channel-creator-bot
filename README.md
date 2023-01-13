@@ -98,26 +98,30 @@ LOG_LEVEL=info
 
 ```
 b_serverinstance_permission_list
-b_serverquery_login
 b_virtualserver_client_list
 b_virtualserver_notify_register
 b_virtualserver_notify_unregister
-b_virtualserver_servergroup_list
-b_virtualserver_servergroup_permission_list
-b_virtualserver_channelgroup_list
-b_virtualserver_servergroup_create
-i_group_modify_power
-i_group_needed_modify_power
+b_channel_create_child
+b_channel_create_temporary
+b_channel_create_modify_with_codec_opusvoice
+i_channel_create_modify_with_codec_latency_factor_min (0)
+b_channel_create_with_maxclients
+b_channel_join_permanent
+b_channel_join_temporary
+i_channel_needed_join_power (grant)
+i_channel_needed_subscribe_power (grant)
+i_channel_max_depth (-1)
+i_channel_needed_permission_modify_power (grant)
+b_virtualserver_channel_permission_list
 i_group_member_add_power
-i_group_needed_member_add_power
-i_group_needed_member_remove_power
+i_group_member_add_power (grant)
+i_group_member_remove_power
 i_permission_modify_power
-i_permission_modify_power (grant)
-b_virtualserver_servergroup_delete
 i_icon_id (grant)
-i_max_icon_filesize
-b_icon_manage
-i_group_sort_id (grant)
+b_group_is_permanent
+i_group_sort_id
+b_client_info_view
+i_client_move_power
 ```
 
 ## Quality tools
