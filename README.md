@@ -3,7 +3,7 @@
 Teamspeak bot which creates group-channel on demand. User just needs to join a predefined channel to create a group
 channel.
 
-![img.png](ressources/example.png)
+![example.png](ressources%2Fexample.png)
 
 ## Setup
 
