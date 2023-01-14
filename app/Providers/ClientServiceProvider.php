@@ -47,6 +47,7 @@ class ClientServiceProvider extends ServiceProvider implements DeferrableProvide
         /** @var int|null $channelAdminGroupId */
         /** @var int|null $channelNeededJoinPower */
         /** @var int|null $channelNeededSubscribePower */
+        /** @var int|null $defaultChannel */
         $this->app->bind(ClientServiceInterface::class, function () use (
             $defaultChannel,
             $channelNeededSubscribePower,
