@@ -24,7 +24,7 @@ php channel-creator-bot migrate
 Run the bot
 
 ```
-php game-bot run
+php channel-creator-bot run
 ```
 
 ## Setup for production
