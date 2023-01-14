@@ -47,6 +47,24 @@ class TeamspeakGateway
         return $result;
     }
 
+    public static function channelExists(string $name): bool
+    {
+        $result = true;
+
+        try {
+            TeamSpeak3::channelGetByName($name);
+            $result = false;
+        } catch (Exception $e) {
+        }
+
+        return $result;
+    }
+
+    public static function clearClientCache(): void
+    {
+        TeamSpeak3::clientListReset();
+    }
+
     public static function createChannel(string $name, int $parent = null, int $maxClients = null, bool $permanent = false): ?int
     {
         $channelId = null;

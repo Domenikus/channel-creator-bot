@@ -10,18 +10,18 @@ class ClientService implements ClientServiceInterface
 
     protected ?int $channelClientLimit;
 
+    protected array $channelNames;
+
     protected ?int $channelNeededJoinPower;
 
     protected ?int $channelNeededSubscribePower;
 
-    protected string $channelTemplate;
-
     protected int $parentChannel;
 
-    public function __construct(int $parentChannel, string $channelTemplate, ?int $channelClientLimit = null, ?int $channelAdminGroupId = null, ?int $channelNeededJoinPower = null, ?int $channelNeededSubscribePower = null)
+    public function __construct(int $parentChannel, array $channelNames, ?int $channelClientLimit = null, ?int $channelAdminGroupId = null, ?int $channelNeededJoinPower = null, ?int $channelNeededSubscribePower = null)
     {
         $this->parentChannel = $parentChannel;
-        $this->channelTemplate = $channelTemplate;
+        $this->channelNames = $channelNames;
         $this->channelClientLimit = $channelClientLimit;
         $this->channelAdminGroupId = $channelAdminGroupId;
         $this->channelNeededJoinPower = $channelNeededJoinPower;
@@ -37,8 +37,7 @@ class ClientService implements ClientServiceInterface
                 return;
             }
 
-            $newChannelId = TeamspeakGateway::createChannel($this->channelTemplate.' '.$client['client_nickname'], $this->parentChannel, $this->channelClientLimit);
-
+            $newChannelId = TeamspeakGateway::createChannel($this->generateChannelName(), $this->parentChannel, $this->channelClientLimit);
             if (! $newChannelId) {
                 return;
             }
@@ -58,5 +57,21 @@ class ClientService implements ClientServiceInterface
                 TeamspeakGateway::assignPermissionToChannel($newChannelId, TeamspeakGateway::CHANNEL_PERMISSION_NEEDED_SUBSCRIBE_POWER, $this->channelNeededSubscribePower);
             }
         }
+    }
+
+    protected function generateChannelName(string $channelName = ''): string
+    {
+        $attempts = 0;
+
+        do {
+            $channelName .= $this->channelNames[array_rand($this->channelNames)];
+            if ($attempts >= count($this->channelNames)) {
+                $this->generateChannelName($channelName);
+            }
+
+            $attempts++;
+        } while (! TeamspeakGateway::channelExists($channelName));
+
+        return $channelName;
     }
 }
