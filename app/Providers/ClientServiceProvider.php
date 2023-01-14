@@ -22,6 +22,7 @@ class ClientServiceProvider extends ServiceProvider implements DeferrableProvide
         $channelAdminGroupId = config('teamspeak.channel_admin_group_id');
         $channelNeededJoinPower = config('teamspeak.channel_needed_join_power');
         $channelNeededSubscribePower = config('teamspeak.channel_needed_subscribe_power');
+        $defaultChannel = config('teamspeak.default_channel');
         $channelNameLists = config('channel-names.lists');
         $channelListName = config('channel-names.default');
 
@@ -31,6 +32,7 @@ class ClientServiceProvider extends ServiceProvider implements DeferrableProvide
             (! is_numeric($channelAdminGroupId) && ! is_null($channelAdminGroupId)) ||
             (! is_numeric($channelNeededJoinPower) && ! is_null($channelNeededJoinPower)) ||
             (! is_numeric($channelNeededSubscribePower) && ! is_null($channelNeededSubscribePower)) ||
+            (! is_numeric($defaultChannel) && ! is_null($defaultChannel)) ||
             (! is_array($channelNameLists)) ||
             (! is_string($channelListName)) ||
             (empty($channelNameLists[$channelListName]))
@@ -45,10 +47,12 @@ class ClientServiceProvider extends ServiceProvider implements DeferrableProvide
         /** @var int|null $channelAdminGroupId */
         /** @var int|null $channelNeededJoinPower */
         /** @var int|null $channelNeededSubscribePower */
+        /** @var int|null $defaultChannel */
         $this->app->bind(ClientServiceInterface::class, function () use (
+            $defaultChannel,
             $channelNeededSubscribePower,
             $channelNeededJoinPower, $channelClientLimit, $channelAdminGroupId, $parentChannel, $channelNames) {
-            return new ClientService((int) $parentChannel, $channelNames, $channelClientLimit, $channelAdminGroupId, $channelNeededJoinPower, $channelNeededSubscribePower);
+            return new ClientService((int) $parentChannel, $channelNames, $defaultChannel, $channelClientLimit, $channelAdminGroupId, $channelNeededJoinPower, $channelNeededSubscribePower);
         });
     }
 }

@@ -12,16 +12,19 @@ class ClientService implements ClientServiceInterface
 
     protected array $channelNames;
 
+    protected ?int $defaultChannel;
+
     protected ?int $channelNeededJoinPower;
 
     protected ?int $channelNeededSubscribePower;
 
     protected int $parentChannel;
 
-    public function __construct(int $parentChannel, array $channelNames, ?int $channelClientLimit = null, ?int $channelAdminGroupId = null, ?int $channelNeededJoinPower = null, ?int $channelNeededSubscribePower = null)
+    public function __construct(int $parentChannel, array $channelNames, ?int $defaultChannel, ?int $channelClientLimit = null, ?int $channelAdminGroupId = null, ?int $channelNeededJoinPower = null, ?int $channelNeededSubscribePower = null)
     {
         $this->parentChannel = $parentChannel;
         $this->channelNames = $channelNames;
+        $this->defaultChannel = $defaultChannel;
         $this->channelClientLimit = $channelClientLimit;
         $this->channelAdminGroupId = $channelAdminGroupId;
         $this->channelNeededJoinPower = $channelNeededJoinPower;
@@ -43,7 +46,8 @@ class ClientService implements ClientServiceInterface
             }
 
             TeamspeakGateway::moveClient($client->getId(), $newChannelId);
-            TeamspeakGateway::moveClient(TeamspeakGateway::getOwnClientId(), $this->parentChannel);
+            $botChannel = $this->defaultChannel ?: $this->parentChannel;
+            TeamspeakGateway::moveClient(TeamspeakGateway::getOwnClientId(), $botChannel);
 
             if ($this->channelAdminGroupId) {
                 TeamspeakGateway::assignChannelGroupToClient($client, $newChannelId, $this->channelAdminGroupId);
