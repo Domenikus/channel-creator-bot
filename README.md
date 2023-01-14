@@ -1,7 +1,8 @@
 # Channel-creator-bot
 
 Teamspeak bot which creates group-channel on demand. User just needs to join a predefined channel to create a group
-channel.
+channel. All clients entering the specified channel get their own temporary channel as sub channel. Created channels are
+named after countries in the world.
 
 ![example.png](ressources%2Fexample.png)
 
