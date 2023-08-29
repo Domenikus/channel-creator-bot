@@ -1,7 +1,7 @@
 <?php
 
 $config = [
-    'default' => env('CHANNEL_NAMES_DEFAULT_LIST', 'words'),
+    'default' => env('CHANNEL_NAMES_DEFAULT_LIST', 'countries'),
 
     'lists' => [
         'countries' => [
