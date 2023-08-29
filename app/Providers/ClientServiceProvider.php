@@ -25,6 +25,7 @@ class ClientServiceProvider extends ServiceProvider implements DeferrableProvide
         $defaultChannel = config('teamspeak.default_channel');
         $channelNameLists = config('channel-names.lists');
         $channelListName = config('channel-names.default');
+        $channelNameClientLists = config('channel-names.clients');
 
         if (
             (! is_numeric($parentChannel)) ||
@@ -34,6 +35,7 @@ class ClientServiceProvider extends ServiceProvider implements DeferrableProvide
             (! is_numeric($channelNeededSubscribePower) && ! is_null($channelNeededSubscribePower)) ||
             (! is_numeric($defaultChannel) && ! is_null($defaultChannel)) ||
             (! is_array($channelNameLists)) ||
+            (! is_array($channelNameClientLists)) ||
             (! is_string($channelListName)) ||
             (empty($channelNameLists[$channelListName]))
         ) {
@@ -49,10 +51,11 @@ class ClientServiceProvider extends ServiceProvider implements DeferrableProvide
         /** @var int|null $channelNeededSubscribePower */
         /** @var int|null $defaultChannel */
         $this->app->bind(ClientServiceInterface::class, function () use (
+            $channelNameClientLists,
             $defaultChannel,
             $channelNeededSubscribePower,
             $channelNeededJoinPower, $channelClientLimit, $channelAdminGroupId, $parentChannel, $channelNames) {
-            return new ClientService((int) $parentChannel, $channelNames, $defaultChannel, $channelClientLimit, $channelAdminGroupId, $channelNeededJoinPower, $channelNeededSubscribePower);
+            return new ClientService((int) $parentChannel, $channelNames, $defaultChannel, $channelClientLimit, $channelAdminGroupId, $channelNeededJoinPower, $channelNeededSubscribePower, $channelNameClientLists);
         });
     }
 }
