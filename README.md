@@ -93,6 +93,14 @@ LOG_CHANNEL=stack
 
 # Default is 'info' if you want to debug the application may you want to change this to 'debug'
 LOG_LEVEL=info
+
+# (Optional) Default is empty. Allow customizing the list of channel names by providing additonal ones. Variable need to be json encoded string.
+# e.g. { "cities": [ "Munich", "London" ], "software": [ "Word", "Excel" ] }
+CHANNEL_NAMES_CUSTOM_LISTS=
+
+# (Optional) Default is empty. Allow client specific channel names by providing the identity ID and a custom list. Variable need to be json encoded string.
+# e.g. { "YzablyuJuYIE7ogxTorhImGdA01=": [ "Berhain", "Sisyphos" ], "YbablyuJuYIE7ogxTorhImGdA01=": [ "Foo", "Bar" ] }
+CLIENT_SPECIFIC_CHANNEL_NAME_LISTS
 ```
 
 ### Necessary bot permissions in ts3 server
