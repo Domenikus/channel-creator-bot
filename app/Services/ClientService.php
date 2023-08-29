@@ -20,7 +20,9 @@ class ClientService implements ClientServiceInterface
 
     protected int $parentChannel;
 
-    public function __construct(int $parentChannel, array $channelNames, ?int $defaultChannel, ?int $channelClientLimit = null, ?int $channelAdminGroupId = null, ?int $channelNeededJoinPower = null, ?int $channelNeededSubscribePower = null)
+    protected array $channelNameClientLists;
+
+    public function __construct(int $parentChannel, array $channelNames, ?int $defaultChannel, int $channelClientLimit = null, int $channelAdminGroupId = null, int $channelNeededJoinPower = null, int $channelNeededSubscribePower = null, array $channelNameClientLists = [])
     {
         $this->parentChannel = $parentChannel;
         $this->channelNames = $channelNames;
@@ -29,6 +31,7 @@ class ClientService implements ClientServiceInterface
         $this->channelAdminGroupId = $channelAdminGroupId;
         $this->channelNeededJoinPower = $channelNeededJoinPower;
         $this->channelNeededSubscribePower = $channelNeededSubscribePower;
+        $this->channelNameClientLists = $channelNameClientLists;
     }
 
     public function handleClientMove(int $clientId, int $targetChannelId): void
@@ -40,7 +43,15 @@ class ClientService implements ClientServiceInterface
                 return;
             }
 
-            $newChannelId = TeamspeakGateway::createChannel($this->generateChannelName(), $this->parentChannel, $this->channelClientLimit);
+            /** @phpstan-ignore-next-line */
+            $clientIdentityId = $client['client_unique_identifier']->toString();
+            if (isset($this->channelNameClientLists[$clientIdentityId])) {
+                $channelName = $this->generateChannelName($this->channelNameClientLists[$clientIdentityId]);
+            } else {
+                $channelName = $this->generateChannelName($this->channelNames);
+            }
+            $newChannelId = TeamspeakGateway::createChannel($channelName, $this->parentChannel, $this->channelClientLimit);
+
             if (! $newChannelId) {
                 return;
             }
@@ -63,14 +74,14 @@ class ClientService implements ClientServiceInterface
         }
     }
 
-    protected function generateChannelName(string $channelName = ''): string
+    protected function generateChannelName(array $listOfNames, string $channelName = ''): string
     {
         $attempts = 0;
 
         do {
-            $channelName .= $this->channelNames[array_rand($this->channelNames)];
+            $channelName .= $listOfNames[array_rand($listOfNames)];
             if ($attempts >= count($this->channelNames)) {
-                $this->generateChannelName($channelName);
+                $this->generateChannelName($listOfNames, $channelName);
             }
 
             $attempts++;
