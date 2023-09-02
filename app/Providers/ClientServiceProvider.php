@@ -35,8 +35,8 @@ class ClientServiceProvider extends ServiceProvider implements DeferrableProvide
         $channelNameClientLists = config('channel-names.clients');
 
         if (
-            (! is_string($channelTopic)) ||
-            (! is_string($channelDescription)) ||
+            (! is_string($channelTopic) && ! is_null($channelTopic)) ||
+            (! is_string($channelDescription) && ! is_null($channelDescription)) ||
             (! is_numeric($parentChannel)) ||
             (! is_numeric($channelClientLimit) && ! is_null($channelClientLimit)) ||
             (! is_numeric($channelAdminGroupId) && ! is_null($channelAdminGroupId)) ||
