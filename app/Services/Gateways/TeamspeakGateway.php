@@ -11,12 +11,17 @@ class TeamspeakGateway
 {
     const CHANNEL_PERMISSION_NEEDED_JOIN_POWER = 'i_channel_needed_join_power';
 
-    const CHANNEL_PERMISSION_NEEDED_MODIFY_POWER = 'i_channel_needed_permission_modify_power';
+    const CHANNEL_PERMISSION_NEEDED_MODIFY_POWER = 'i_channel_needed_modify_power';
 
     const CHANNEL_PERMISSION_NEEDED_SUBSCRIBE_POWER = 'i_channel_needed_subscribe_power';
 
-    public static function assignChannelGroupToClient(TeamSpeak3_Node_Client $client, int $channelId, int $channelGroupId): bool
-    {
+    const CHANNEL_PERMISSION_NEEDED_DESCRIPTION_VIEW_POWER = 'i_channel_needed_description_view_power';
+
+    public static function assignChannelGroupToClient(
+        TeamSpeak3_Node_Client $client,
+        int $channelId,
+        int $channelGroupId
+    ): bool {
         $result = false;
 
         try {
@@ -24,7 +29,8 @@ class TeamspeakGateway
 
             $result = true;
         } catch (Exception $e) {
-            Log::error($e->getMessage(), ['client' => $client, 'channelId' => $channelId, 'channelGroupId' => $channelGroupId]);
+            Log::error($e->getMessage(),
+                ['client' => $client, 'channelId' => $channelId, 'channelGroupId' => $channelGroupId]);
             report($e);
         }
 
@@ -40,7 +46,8 @@ class TeamspeakGateway
             TeamSpeak3::channelPermAssign($channelId, $permissionId, $value);
             $result = true;
         } catch (Exception $e) {
-            Log::error($e->getMessage(), ['channelId' => $channelId, 'permissionId' => $permissionId, 'value' => $value]);
+            Log::error($e->getMessage(),
+                ['channelId' => $channelId, 'permissionId' => $permissionId, 'value' => $value]);
             report($e);
         }
 
@@ -65,15 +72,36 @@ class TeamspeakGateway
         TeamSpeak3::clientListReset();
     }
 
-    public static function createChannel(string $name, int $parent = null, int $maxClients = null, bool $permanent = false): ?int
-    {
+    public static function createChannel(
+        string $name,
+        string $codec,
+        int $parent = null,
+        int $maxClients = null,
+        bool $permanent = false,
+        int $neededTalkPower = null,
+        string $topic = null,
+        string $description = null,
+        int $codecQuality = null
+    ): ?int {
         $channelId = null;
 
         $channelProperties = [
             'channel_name' => $name,
             'channel_flag_permanent' => $permanent,
-            'channel_codec' => \TeamSpeak3::CODEC_OPUS_VOICE,
+            'channel_codec' => ($codec == 'opus_voice') ? \TeamSpeak3::CODEC_OPUS_VOICE : \TeamSpeak3::CODEC_OPUS_MUSIC,
         ];
+
+        if ($topic) {
+            $channelProperties['CHANNEL_TOPIC'] = $topic;
+        }
+
+        if ($description) {
+            $channelProperties['CHANNEL_DESCRIPTION'] = $description;
+        }
+
+        if ($neededTalkPower) {
+            $channelProperties['CHANNEL_NEEDED_TALK_POWER'] = $neededTalkPower;
+        }
 
         if ($parent) {
             $channelProperties['cpid'] = $parent;
@@ -82,6 +110,10 @@ class TeamspeakGateway
         if ($maxClients) {
             $channelProperties['channel_maxclients'] = $maxClients;
             $channelProperties['channel_flag_maxclients_unlimited'] = false;
+        }
+
+        if ($codecQuality && $codecQuality >= 1 && $codecQuality <= 10) {
+            $channelProperties['CHANNEL_CODEC_QUALITY'] = $codecQuality;
         }
 
         try {
@@ -111,7 +143,7 @@ class TeamspeakGateway
     public static function getOwnClientId(): int
     {
         $clientId = TeamSpeak3::whoamiGet('client_id');
-        if (! is_numeric($clientId)) {
+        if (!is_numeric($clientId)) {
             throw new Exception('Could not get own client id');
         }
 
@@ -126,7 +158,8 @@ class TeamspeakGateway
             TeamSpeak3::clientMove($clientId, $channelId, $channelPassword);
             $result = true;
         } catch (Exception $e) {
-            Log::error($e->getMessage(), ['client_id' => $clientId, 'channel_id' => $channelId, 'channel_password' => $channelPassword]);
+            Log::error($e->getMessage(),
+                ['client_id' => $clientId, 'channel_id' => $channelId, 'channel_password' => $channelPassword]);
             report($e);
         }
 
