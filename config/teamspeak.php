@@ -10,7 +10,6 @@ return [
     'query_port' => env('TEAMSPEAK_QUERY_PORT', 10011),
     'bot_name' => 'channel-creator-bot_'.Str::random(4),
     'default_channel' => env('TEAMSPEAK_DEFAULT_CHANNEL'),
-
     'channel_topic' => env('TEAMSPEAK_CHANNEL_TOPIC'),
     'channel_description' => env('TEAMSPEAK_CHANNEL_DESCRIPTION'),
     'parent_channel' => env('TEAMSPEAK_PARENT_CHANNEL', 1),
