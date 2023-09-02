@@ -35,22 +35,22 @@ class ClientServiceProvider extends ServiceProvider implements DeferrableProvide
         $channelNameClientLists = config('channel-names.clients');
 
         if (
-            (!is_string($channelTopic)) ||
-            (!is_string($channelDescription)) ||
-            (!is_numeric($parentChannel)) ||
-            (!is_numeric($channelClientLimit) && !is_null($channelClientLimit)) ||
-            (!is_numeric($channelAdminGroupId) && !is_null($channelAdminGroupId)) ||
-            (!is_string($channelCodec)) ||
-            (!is_numeric($channelCodecQuality) && !is_null($channelCodecQuality)) ||
-            (!is_numeric($channelNeededJoinPower) && !is_null($channelNeededJoinPower)) ||
-            (!is_numeric($channelNeededSubscribePower) && !is_null($channelNeededSubscribePower)) ||
-            (!is_numeric($channelNeededDescriptionViewPower) && !is_null($channelNeededDescriptionViewPower)) ||
-            (!is_numeric($channelNeededModifyPower) && !is_null($channelNeededModifyPower)) ||
-            (!is_numeric($channelNeededTalkPower) && !is_null($channelNeededTalkPower)) ||
-            (!is_numeric($defaultChannel) && !is_null($defaultChannel)) ||
-            (!is_array($channelNameLists)) ||
-            (!is_array($channelNameClientLists)) ||
-            (!is_string($channelListName)) ||
+            (! is_string($channelTopic)) ||
+            (! is_string($channelDescription)) ||
+            (! is_numeric($parentChannel)) ||
+            (! is_numeric($channelClientLimit) && ! is_null($channelClientLimit)) ||
+            (! is_numeric($channelAdminGroupId) && ! is_null($channelAdminGroupId)) ||
+            (! is_string($channelCodec)) ||
+            (! is_numeric($channelCodecQuality) && ! is_null($channelCodecQuality)) ||
+            (! is_numeric($channelNeededJoinPower) && ! is_null($channelNeededJoinPower)) ||
+            (! is_numeric($channelNeededSubscribePower) && ! is_null($channelNeededSubscribePower)) ||
+            (! is_numeric($channelNeededDescriptionViewPower) && ! is_null($channelNeededDescriptionViewPower)) ||
+            (! is_numeric($channelNeededModifyPower) && ! is_null($channelNeededModifyPower)) ||
+            (! is_numeric($channelNeededTalkPower) && ! is_null($channelNeededTalkPower)) ||
+            (! is_numeric($defaultChannel) && ! is_null($defaultChannel)) ||
+            (! is_array($channelNameLists)) ||
+            (! is_array($channelNameClientLists)) ||
+            (! is_string($channelListName)) ||
             (empty($channelNameLists[$channelListName]))
         ) {
             Log::error('Invalid environment variables');

@@ -30,7 +30,7 @@ class ClientService implements ClientServiceInterface
         if ($targetChannelId == $this->parentChannel && $clientId !== TeamspeakGateway::getOwnClientId()) {
             $client = TeamspeakGateway::getClientById($clientId);
 
-            if (!$client || !isset($client['client_nickname'])) {
+            if (! $client || ! isset($client['client_nickname'])) {
                 return;
             }
 
@@ -50,7 +50,7 @@ class ClientService implements ClientServiceInterface
                 topic: $this->channelTopic, description: $this->channelDescription,
                 codecQuality: $this->channelCodecQuality);
 
-            if (!$newChannelId) {
+            if (! $newChannelId) {
                 return;
             }
 
@@ -77,7 +77,7 @@ class ClientService implements ClientServiceInterface
             }
 
             $attempts++;
-        } while (!TeamspeakGateway::channelExists($channelName));
+        } while (! TeamspeakGateway::channelExists($channelName));
 
         return $channelName;
     }

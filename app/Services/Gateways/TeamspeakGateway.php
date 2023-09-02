@@ -143,7 +143,7 @@ class TeamspeakGateway
     public static function getOwnClientId(): int
     {
         $clientId = TeamSpeak3::whoamiGet('client_id');
-        if (!is_numeric($clientId)) {
+        if (! is_numeric($clientId)) {
             throw new Exception('Could not get own client id');
         }
 
