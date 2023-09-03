@@ -6,6 +6,12 @@ named after countries in the world.
 
 ![example.png](ressources%2Fexample.png)
 
+## Demo
+
+The actual testing version (development branch) can be tested on my Teamspeakserver.
+
+Host: m3px.games:9988
+
 ## Setup
 
 ### Development
