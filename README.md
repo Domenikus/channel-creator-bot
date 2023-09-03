@@ -70,28 +70,49 @@ TEAMSPEAK_QUERY_PASSWORD=
 # Query user port, default is 10011
 TEAMSPEAK_QUERY_PORT=10011
 
-# Bot default channel, if not provided bot will stay in servers default channel
-TEAMSPEAK_DEFAULT_CHANNEL=
-
 # Parent channel where group channels created below
 TEAMSPEAK_PARENT_CHANNEL=
 
 # Client limit for created sub channel
 TEAMSPEAK_CHANNEL_CLIENT_LIMIT=
 
-# Id of channel admin groups which will be assiged to client. If not provided no channel group will be assigned to client
+# (Optional) Bot default channel, if not provided bot will stay in servers default channel
+TEAMSPEAK_DEFAULT_CHANNEL=
+
+# (Optional) Set channel codec, default is opus_voice. Valid values: opus_voice, opus_music
+TEAMSPEAK_CHANNEL_CODEC=
+
+# (Optional) Set channel codec quality. Provide value between 1 and 10. If not provided server standard will be used
+TEAMSPEAK_CHANNEL_CODEC_QUALITY=
+
+# (Optional) Set channel topic of created channel. If not provided, topic will be empty
+TEAMSPEAK_CHANNEL_TOPIC=
+
+# (Optional) Set channel description of created channel. If not provided, description will be empty
+TEAMSPEAK_CHANNEL_DESCRIPTION=
+
+# (Optional) Id of channel admin groups which will be assiged to client. If not provided no channel group will be assigned to client
 TEAMSPEAK_CHANNEL_ADMIN_GROUP_ID=
 
-# Needed join power to join the created channel, if not provided no join power is needed.
+# (Optional) Needed join power to join the created channel, if not provided no join power is needed.
 TEAMSPEAK_NEEDED_CHANNEL_JOIN_POWER=
 
-# Needed subscribe power to subscribe the created channel, if not provided no subscribe power is needed.
+# (Optional) Needed subscribe power to subscribe the created channel, if not provided no subscribe power is needed.
 TEAMSPEAK_NEEDED_CHANNEL_SUBSCRIBE_POWER=
 
-#Specify how the application will log messages like erros. Default will be stack.
+# (Optional) Needed description view power to view created channel description, if not provided no subscribe power is needed.
+TEAMSPEAK_NEEDED_CHANNEL_DESCRIPTION_VIEW_POWER=
+
+# (Optional) Needed modify power to modify created channel, if not provided no modify power is needed.
+TEAMSPEAK_NEEDED_CHANNEL_MODIFY_POWER=
+
+# (Optional) Needed talk power to speak in created channel, if not provided no talk power is needed.
+TEAMSPEAK_NEEDED_CHANNEL_TALK_POWER=
+
+# (Optional) Specify how the application will log messages like erros. Default will be stack.
 LOG_CHANNEL=stack
 
-# Default is 'info' if you want to debug the application may you want to change this to 'debug'
+# (Optional) Default is 'info' if you want to debug the application may you want to change this to 'debug'
 LOG_LEVEL=info
 
 # (Optional) Default is empty. Allow customizing the list of channel names by providing additonal ones. Variable need to be json encoded string.
@@ -113,14 +134,21 @@ b_virtualserver_notify_unregister
 b_channel_create_child
 b_channel_create_temporary
 b_channel_create_modify_with_codec_opusvoice
+b_channel_create_modify_with_codec_opusmusic
+i_channel_create_modify_with_codec_maxquality (10)
 i_channel_create_modify_with_codec_latency_factor_min (0)
+b_channel_create_with_topic
+b_channel_create_with_description
 b_channel_create_with_maxclients
+i_channel_modify_power
 b_channel_join_permanent
 b_channel_join_temporary
 i_channel_needed_join_power (grant)
 i_channel_needed_subscribe_power (grant)
 i_channel_max_depth (-1)
 i_channel_needed_permission_modify_power (grant)
+i_channel_needed_description_view_power (grant)
+i_channel_needed_modify_power (grant)
 b_virtualserver_channel_permission_list
 i_group_member_add_power
 i_group_member_add_power (grant)
