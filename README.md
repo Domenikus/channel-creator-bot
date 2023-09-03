@@ -8,7 +8,7 @@ named after countries in the world.
 
 ## Demo
 
-The actual testing version (development branch) can be tested on my Teamspeakserver.
+The actual testing version (development branch) can be tested on my Teamspeak server.
 
 Host: m3px.games:9988
 
